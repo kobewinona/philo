@@ -43,7 +43,7 @@ void	ft_usleep(long long usec)
 		else
 		{
 			while (get_curr_time_us() < end)
-				usleep(1000);
+				usleep(500);
 			break ;
 		}
 	}

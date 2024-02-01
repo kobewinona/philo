@@ -17,8 +17,8 @@ void	print_log(t_philo *philo, char *message)
 	struct timeval	curr_time;
 	long			elapsed_ms;
 
-	pthread_mutex_lock(&philo->sim_log->mutex);
 	gettimeofday(&curr_time, NULL);
+	pthread_mutex_lock(&philo->sim_log->mutex);
 	elapsed_ms = (curr_time.tv_sec - philo->sim_log->start_time.tv_sec) * MS_PER_SEC;
 	elapsed_ms += (curr_time.tv_usec - philo->sim_log->start_time.tv_usec) / US_PER_MS;
 	printf("%011ld %d %s", elapsed_ms, philo->id, message);

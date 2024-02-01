@@ -26,7 +26,7 @@ static int	create_threads(t_sim **sim)
 		if (pthread_create(&(*sim)->threads[i], NULL, philosopher_routine,
 				&(*sim)->philos[i]) != SUCCESS)
 			return (ERROR);
-		ft_usleep(i * 10 * US_PER_MS);
+//		ft_usleep(i * 10 * US_PER_MS);
 //		usleep(i * 10 * US_PER_MS);
 		i++;
 	}

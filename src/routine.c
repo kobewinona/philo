@@ -17,8 +17,8 @@ static int	try_eat(t_philo *philo)
 //	if (should_philosopher_stop(philo) == true)
 //		return (FAILURE);
 //	print_log(philo, THINK);
-	if (print_log_with_status_check(philo, THINK) == FAILURE)
-		return (FAILURE);
+//	if (print_log_with_status_check(philo, THINK) == FAILURE)
+//		return (FAILURE);
 	if (try_take_forks(philo) == FAILURE)
 		return (FAILURE);
 //	pthread_mutex_lock(&philo->meal->mutex);
@@ -30,8 +30,8 @@ static int	try_eat(t_philo *philo)
 //	print_log(philo, EAT);
 	if (print_log_with_status_check(philo, EAT) == FAILURE)
 		return (FAILURE);
-	pthread_mutex_lock(&philo->meal->mutex);
 	gettimeofday(&philo->meal->last_meal, NULL);
+	pthread_mutex_lock(&philo->meal->mutex);
 	if (philo->meal->number_of_meals_left != UNSPECIFIED)
 		philo->meal->number_of_meals_left--;
 	pthread_mutex_unlock(&philo->meal->mutex);
@@ -46,9 +46,14 @@ void	*philosopher_routine(void *arg)
 {
 	t_philo	*philo;
 	bool	should_continue;
+	long	start_delay;
 
 	philo = (t_philo *)arg;
 	should_continue = (philo->meal->number_of_meals_left == UNSPECIFIED);
+	print_log(philo, THINK);
+	start_delay = (philo->id % 10) * 5; // Modulate by 10, multiply by 5ms for example
+	ft_usleep(start_delay * US_PER_MS);
+//	ft_usleep(philo->id * 5 * US_PER_MS);
 	while (should_continue || philo->meal->number_of_meals_left > 0)
 	{
 		if (try_eat(philo) == FAILURE)
@@ -59,6 +64,8 @@ void	*philosopher_routine(void *arg)
 		if (print_log_with_status_check(philo, SLEEP) == FAILURE)
 			return (NULL);
 		ft_usleep(philo->sim_params.time_to_sleep * US_PER_MS);
+		if (print_log_with_status_check(philo, THINK) == FAILURE)
+			return (NULL);
 	}
 	return (NULL);
 }

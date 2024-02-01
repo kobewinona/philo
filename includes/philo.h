@@ -27,7 +27,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-# define MAX_MS_TO_ANNOUNCE_DEATH 8
+# define MAX_MS_TO_ANNOUNCE_DEATH 10
 # define FREQ_RATIO_TO_UPDATE_STATUS 20
 
 # define MS_PER_SEC 1000
@@ -143,5 +143,6 @@ void	ft_usleep(long long usec);
 // 00000046789 - 00000045984 5276
 
 // socrates: average delay: 3.2 ms
+// socrates: average delay: 2.3 ms!
 
 #endif
