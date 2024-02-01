@@ -39,8 +39,9 @@
 # define INVALID_ARGS_ERR "Provided arguments are not valid\n"
 # define UNKNOWN_ERR "Unknown error occurred\n"
 
-// timestamp messages
+// get_curr_time_ms messages
 # define THINK "is thinking\n"
+# define FORK "has taken a fork\n"
 # define EAT "is eating\n"
 # define SLEEP "is sleeping\n"
 # define DIE "died\n"
@@ -48,7 +49,6 @@
 # define FORK "has taken a fork\n"
 
 // structures
-
 typedef struct s_sim_params
 {
 	int		number_of_philos;
@@ -82,14 +82,11 @@ typedef struct s_sim_log
 typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
-	bool			is_free;
-	bool			is_contested;
 }	t_fork;
 
 typedef struct s_meal
 {
 	pthread_mutex_t	mutex;
-	bool			is_eating;
 	int				number_of_meals_left;
 	struct timeval	last_meal;
 }	t_meal;
@@ -102,7 +99,6 @@ typedef struct s_philo
 	t_sim_log		*sim_log;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	bool			is_thinking;
 	t_meal			*meal;
 }	t_philo;
 
@@ -123,17 +119,29 @@ void	run_sim(t_sim **sim);
 
 void	*philosopher_routine(void *arg);
 bool	is_philosopher_dead(t_philo *philo);
-bool	has_philo_ate_all_the_meals(t_philo *philo);
-bool	should_philosopher_stop(t_sim_status *sim_status);
+bool	has_philo_meals_left(t_philo *philo);
+bool	should_philosopher_stop(t_philo *philo);
 
 int		try_take_forks(t_philo *philo);
-void	release_forks(t_fork **right_fork, t_fork **left_fork);
+void	release_forks(t_philo *philo);
 
-void	print_log(t_sim_log *log, int id, char *message);
+void	print_log(t_philo *philo, char *message);
+int		print_log_with_status_check(t_philo *philo, char *message);
 
 int		handle_cleanup(t_sim **sim);
 
 // /utils
 int		ft_atoi(const char *str);
+void	ft_usleep(long long usec);
+
+// Test #1 Given 4 310 200 100 arguments to philo, a philosopher should die !
+// Test #3 Given 4 800 200 200 arguments to philo, no philosopher should die !
+// Test #4 Given 4 410 200 200 arguments to philo, no philosopher should die !
+
+// Test Given 5 600 150 150 arguments to philo, no philosopher should die !
+
+// 00000046789 - 00000045984 5276
+
+// socrates: average delay: 3.2 ms
 
 #endif

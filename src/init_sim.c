@@ -26,7 +26,6 @@ static int	create_forks(t_sim **sim)
 	{
 		if (pthread_mutex_init(&(*sim)->forks[i].mutex, NULL) != SUCCESS)
 			return (ERROR);
-		(*sim)->forks[i].is_free = true;
 		i++;
 	}
 	return (SUCCESS);

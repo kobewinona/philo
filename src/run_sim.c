@@ -26,6 +26,8 @@ static int	create_threads(t_sim **sim)
 		if (pthread_create(&(*sim)->threads[i], NULL, philosopher_routine,
 				&(*sim)->philos[i]) != SUCCESS)
 			return (ERROR);
+		ft_usleep(i * 10 * US_PER_MS);
+//		usleep(i * 10 * US_PER_MS);
 		i++;
 	}
 	return (SUCCESS);
@@ -52,19 +54,19 @@ static void	update_sim_status(t_sim **sim)
 	i = 0;
 	while (i < (*sim)->params.number_of_philos)
 	{
-		if (has_philo_ate_all_the_meals(&(*sim)->philos[i]) == true)
+		if (has_philo_meals_left(&(*sim)->philos[i]) == true)
 			philos_finished_their_meals++;
 		if (philos_finished_their_meals == (*sim)->params.number_of_philos)
 		{
 			(*sim)->status.stop_event = NO_MEALS_LEFT;
 			return ;
 		}
-//		if (is_philosopher_dead(&(*sim)->philos[i]))
-//		{
-//			(*sim)->status.stop_event = PHILO_DIED;
-//			(*sim)->status.philo_id = i;
-//			return ;
-//		}
+		if (is_philosopher_dead(&(*sim)->philos[i]))
+		{
+			(*sim)->status.stop_event = PHILO_DIED;
+			(*sim)->status.philo_id = i;
+			return ;
+		}
 		i++;
 	}
 }
@@ -76,6 +78,7 @@ void	run_sim(t_sim **sim)
 	ms_to_pause = (*sim)->params.time_to_die / FREQ_RATIO_TO_UPDATE_STATUS;
 	if (ms_to_pause > MAX_MS_TO_ANNOUNCE_DEATH || ms_to_pause <= 0)
 		ms_to_pause = MAX_MS_TO_ANNOUNCE_DEATH;
+	gettimeofday(&(*sim)->log.start_time, NULL);
 	if (create_threads(&(*sim)) == ERROR)
 		return ;
 	while (1)
@@ -84,13 +87,14 @@ void	run_sim(t_sim **sim)
 		if ((*sim)->status.stop_event != NO_STOP_EVENT)
 		{
 			if ((*sim)->status.stop_event == PHILO_DIED)
-				print_log(&(*sim)->log, (*sim)->status.philo_id, DIE);
+				print_log(&(*sim)->philos[(*sim)->status.philo_id], DIE);
 			pthread_mutex_lock(&(*sim)->status.mutex);
 			(*sim)->status.should_stop = true;
 			pthread_mutex_unlock(&(*sim)->status.mutex);
 			join_threads(&(*sim));
 			return ;
 		}
-		usleep(ms_to_pause * US_PER_MS);
+		ft_usleep(ms_to_pause * US_PER_MS);
+//		usleep(ms_to_pause * US_PER_MS);
 	}
 }
