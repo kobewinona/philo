@@ -50,10 +50,10 @@
 typedef struct s_sim_params
 {
 	int		number_of_philos;
-	int		number_of_meals;
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
+	int		number_of_meals;
 }	t_sim_params;
 
 typedef enum e_stop_event
@@ -113,36 +113,28 @@ typedef struct s_sim
 
 // functions
 // /src
-int		init_sim(t_sim **sim, char **argv);
-void	run_sim(t_sim **sim);
+t_sim_params	parse_params(int argc, char **argv);
+int				init_sim(t_sim **sim, t_sim_params params);
+void			run_sim(t_sim **sim);
 
-void	*philo_routine(void *arg);
-bool	is_philo_dead(t_philo *philo);
-bool	has_philo_meals_left(t_philo *philo);
-bool	should_philo_stop(t_philo *philo);
+void			*philo_routine(void *arg);
+bool			is_philo_dead(t_philo *philo);
+bool			has_philo_meals_left(t_philo *philo);
+bool			should_philo_stop(t_philo *philo);
 
-int		try_take_forks(t_philo *philo);
-void	release_forks(t_philo *philo);
+int				try_take_forks(t_philo *philo);
+void			release_forks(t_philo *philo);
 
-void	print_log(t_philo *philo, char *message);
-int		print_log_with_status_check(t_philo *philo, char *message);
+void			print_log(t_philo *philo, char *message);
 
-int		handle_cleanup(t_sim **sim);
+int				handle_cleanup(t_sim **sim);
+int				exit_with_error_message(char *err_msg);
 
 // /utils
-int		ft_atoi(const char *str);
-void	ft_usleep(long long usec);
-
-// Test #1 Given 4 310 200 100 arguments to philo, a philosopher should die !
-// Test #3 Given 4 800 200 200 arguments to philo, no philosopher should die !
-// Test #4 Given 4 410 200 200 arguments to philo, no philosopher should die !
-
-// Test Given 5 600 150 150 arguments to philo, no philosopher should die !
-
-// 00000046789 - 00000045984 5276
-
-// socrates: average delay: 3.2 ms!
-// socrates: average delay: 2.3 ms!
-// socrates: average delay: 0.4 ms!
+int				ft_atoi(const char *str);
+char			**ft_split(char const *s, char c);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+size_t			ft_strlen(const char *s);
+void			ft_usleep(long long usec);
 
 #endif

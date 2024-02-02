@@ -72,22 +72,9 @@ static int	create_philosophers(t_sim **sim)
 	return (SUCCESS);
 }
 
-static void	set_sim_params(char **argv, t_sim_params *params)
+int	init_sim(t_sim **sim, t_sim_params params)
 {
-	memset(params, 0, sizeof(t_sim_params));
-	params->number_of_philos = ft_atoi(argv[1]);
-	params->time_to_die = ft_atoi(argv[2]);
-	params->time_to_eat = ft_atoi(argv[3]);
-	params->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		params->number_of_meals = ft_atoi(argv[5]);
-	else
-		params->number_of_meals = UNSPECIFIED;
-}
-
-int	init_sim(t_sim **sim, char **argv)
-{
-	set_sim_params(argv, &(*sim)->params);
+	(*sim)->params = params;
 	memset(&(*sim)->status, 0, sizeof(t_sim_status));
 	if (pthread_mutex_init(&(*sim)->status.mutex, NULL) != SUCCESS)
 		return (ERROR);

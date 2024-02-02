@@ -12,35 +12,23 @@
 
 #include "philo.h"
 
-static int	exit_with_error_message(char *err_msg)
+int	exit_with_error_message(char *err_msg)
 {
 	printf("Error: %s", err_msg);
 	exit(EXIT_FAILURE);
 }
 
-static int	is_argv_valid(int argc, char **argv)
-{
-	while (argc--)
-	{
-		if (ft_atoi(argv[argc]) <= 0)
-			return (false);
-	}
-	return (true);
-}
-
 int	main(int argc, char **argv)
 {
-	t_sim	*sim;
+	t_sim			*sim;
+	t_sim_params	params;
 
-	if (argc < 5)
-		exit_with_error_message(NOT_ENOUGH_ARGS_ERR);
-	if (is_argv_valid((argc - 1), (argv + 1)) == false)
-		exit_with_error_message(INVALID_ARGS_ERR);
+	params = parse_params((argc - 1), (argv + 1));
 	sim = (t_sim *)malloc(sizeof(t_sim));
 	if (!sim)
 		exit_with_error_message(UNKNOWN_ERR);
 	memset(sim, 0, sizeof(t_sim));
-	if (init_sim(&sim, argv) == ERROR)
+	if (init_sim(&sim, params) == ERROR)
 	{
 		handle_cleanup(&sim);
 		exit_with_error_message(UNKNOWN_ERR);

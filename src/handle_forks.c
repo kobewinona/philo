@@ -27,11 +27,6 @@ static int	try_take_fork(t_philo *philo, t_fork *fork)
 		return (FAILURE);
 	}
 	print_log(philo, FORK);
-//	if (print_log_with_status_check(philo, FORK) == FAILURE)
-//	{
-//		pthread_mutex_unlock(&fork->mutex);
-//		return (FAILURE);
-//	}
 	return (SUCCESS);
 }
 

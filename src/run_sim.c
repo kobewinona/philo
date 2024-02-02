@@ -31,8 +31,6 @@ static int	create_threads(t_sim **sim)
 		if ((*sim)->params.number_of_philos > 4)
 			start_delay = (i % 10) * 5;
 		(*sim)->philos[i].sim_start_delay = start_delay;
-//		ft_usleep(i * 10 * US_PER_MS);
-//		usleep(i * 10 * US_PER_MS);
 		i++;
 	}
 	return (SUCCESS);
@@ -99,8 +97,6 @@ void	run_sim(t_sim **sim)
 			join_threads(&(*sim));
 			return ;
 		}
-//		ft_usleep(MAX_MS_TO_ANNOUNCE_DEATH - 4);
 		ft_usleep(ms_to_pause * US_PER_MS);
-//		usleep(ms_to_pause * US_PER_MS);
 	}
 }

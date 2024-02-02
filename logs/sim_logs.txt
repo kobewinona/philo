@@ -1,23 +1,98 @@
+00000000000 2 is thinking
+00000000000 2 has taken a fork
+00000000000 2 has taken a fork
 00000000000 0 is thinking
 00000000000 0 has taken a fork
 00000000000 0 has taken a fork
 00000000000 0 is eating
-00000000001 1 is thinking
-00000000012 2 is thinking
-00000000012 2 has taken a fork
-00000000012 2 has taken a fork
-00000000012 2 is eating
-00000000033 3 is thinking
+00000000000 2 is eating
+00000000000 1 is thinking
+00000000000 3 is thinking
+00000000200 2 is sleeping
+00000000200 3 has taken a fork
 00000000201 0 is sleeping
 00000000201 1 has taken a fork
-00000000213 2 is sleeping
-00000000213 1 has taken a fork
-00000000213 1 is eating
-00000000213 3 has taken a fork
-00000000213 3 has taken a fork
-00000000213 3 is eating
-00000000401 0 is thinking
-00000000414 1 is sleeping
-00000000414 0 died
-00000000414 2 is thinking
-00000000414 0 has taken a fork
+00000000201 1 has taken a fork
+00000000201 1 is eating
+00000000201 3 has taken a fork
+00000000201 3 is eating
+00000000402 3 is sleeping
+00000000402 0 is thinking
+00000000402 1 is sleeping
+00000000402 0 has taken a fork
+00000000402 0 has taken a fork
+00000000402 0 is eating
+00000000402 2 is thinking
+00000000402 2 has taken a fork
+00000000402 2 has taken a fork
+00000000402 2 is eating
+00000000603 1 is thinking
+00000000603 0 is sleeping
+00000000603 2 is sleeping
+00000000603 3 is thinking
+00000000603 3 has taken a fork
+00000000603 3 has taken a fork
+00000000603 3 is eating
+00000000603 1 has taken a fork
+00000000603 1 has taken a fork
+00000000603 1 is eating
+00000000804 1 is sleeping
+00000000804 0 is thinking
+00000000804 0 has taken a fork
+00000000804 3 is sleeping
+00000000804 2 is thinking
+00000000804 2 has taken a fork
+00000000804 2 has taken a fork
+00000000804 2 is eating
+00000000804 0 has taken a fork
+00000000804 0 is eating
+00000001003 1 is thinking
+00000001003 0 is sleeping
+00000001003 1 has taken a fork
+00000001003 3 is thinking
+00000001003 2 is sleeping
+00000001003 3 has taken a fork
+00000001003 3 has taken a fork
+00000001003 3 is eating
+00000001003 1 has taken a fork
+00000001003 1 is eating
+00000001204 3 is sleeping
+00000001204 0 is thinking
+00000001204 0 has taken a fork
+00000001204 0 has taken a fork
+00000001204 0 is eating
+00000001204 2 is thinking
+00000001204 2 has taken a fork
+00000001204 2 has taken a fork
+00000001204 2 is eating
+00000001204 1 is sleeping
+00000001405 3 is thinking
+00000001405 1 is thinking
+00000001405 2 is sleeping
+00000001405 0 is sleeping
+00000001405 3 has taken a fork
+00000001405 3 has taken a fork
+00000001405 3 is eating
+00000001405 1 has taken a fork
+00000001405 1 has taken a fork
+00000001405 1 is eating
+00000001607 1 is sleeping
+00000001607 0 is thinking
+00000001607 0 has taken a fork
+00000001607 2 is thinking
+00000001607 0 has taken a fork
+00000001607 0 is eating
+00000001607 3 is sleeping
+00000001607 2 has taken a fork
+00000001607 2 has taken a fork
+00000001607 2 is eating
+00000001807 0 is sleeping
+00000001807 1 is thinking
+00000001807 3 is thinking
+00000001807 3 has taken a fork
+00000001807 1 has taken a fork
+00000001807 1 has taken a fork
+00000001807 1 is eating
+00000001807 3 has taken a fork
+00000001807 3 is eating
+00000001807 2 is sleeping

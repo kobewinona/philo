@@ -20,15 +20,6 @@ static long long	get_curr_time_us(void)
 	return (ct.tv_sec * US_PER_SEC + ct.tv_usec);
 }
 
-//void	ft_usleep(long long usec)
-//{
-//	long long	start;
-//
-//	start = get_curr_time_us();
-//	while (get_curr_time_us() - start < usec)
-//		usleep(1000);
-//}
-
 void	ft_usleep(long long usec)
 {
 	long long	start;
