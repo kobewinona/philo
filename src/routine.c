@@ -14,7 +14,7 @@
 
 static int	try_eat(t_philo *philo)
 {
-//	if (should_philosopher_stop(philo) == true)
+//	if (should_philo_stop(philo) == true)
 //		return (FAILURE);
 //	print_log(philo, THINK);
 //	if (print_log_with_status_check(philo, THINK) == FAILURE)
@@ -22,50 +22,58 @@ static int	try_eat(t_philo *philo)
 	if (try_take_forks(philo) == FAILURE)
 		return (FAILURE);
 //	pthread_mutex_lock(&philo->meal->mutex);
-//	if (should_philosopher_stop(philo) == true)
-//	{
-//		release_forks(philo);
-//		return (FAILURE);
-//	}
-//	print_log(philo, EAT);
-	if (print_log_with_status_check(philo, EAT) == FAILURE)
+	if (should_philo_stop(philo) == true)
+	{
+		release_forks(philo);
 		return (FAILURE);
-	gettimeofday(&philo->meal->last_meal, NULL);
+	}
+	print_log(philo, EAT);
+//	if (print_log_with_status_check(philo, EAT) == FAILURE)
+//		return (FAILURE);
 	pthread_mutex_lock(&philo->meal->mutex);
+	gettimeofday(&philo->meal->last_meal, NULL);
 	if (philo->meal->number_of_meals_left != UNSPECIFIED)
 		philo->meal->number_of_meals_left--;
 	pthread_mutex_unlock(&philo->meal->mutex);
-//	print_log(philo, "eating starts\n");
 	ft_usleep(philo->sim_params.time_to_eat * US_PER_MS);
-//	print_log(philo, "eating ends\n");
+//	usleep(philo->sim_params.time_to_eat * US_PER_MS);
 	release_forks(philo);
 	return (SUCCESS);
 }
 
-void	*philosopher_routine(void *arg)
+void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
-	bool	should_continue;
-	long	start_delay;
+	bool	should_go_on_forever;
+//	long	start_delay;
 
 	philo = (t_philo *)arg;
-	should_continue = (philo->meal->number_of_meals_left == UNSPECIFIED);
+	should_go_on_forever = (philo->meal->number_of_meals_left == UNSPECIFIED);
+//	start_delay = (philo->id % 10) * 5;
 	print_log(philo, THINK);
-	start_delay = (philo->id % 10) * 5; // Modulate by 10, multiply by 5ms for example
-	ft_usleep(start_delay * US_PER_MS);
+//	ft_usleep(start_delay * US_PER_MS);
+//	usleep(start_delay * US_PER_MS);
+//	if (philo->sim_start_delay > 0)
+//		usleep(philo->sim_start_delay * US_PER_MS);
+	if (philo->sim_start_delay > 0)
+		ft_usleep(philo->sim_start_delay * US_PER_MS);
 //	ft_usleep(philo->id * 5 * US_PER_MS);
-	while (should_continue || philo->meal->number_of_meals_left > 0)
+	while (should_go_on_forever || philo->meal->number_of_meals_left > 0)
 	{
 		if (try_eat(philo) == FAILURE)
 			return (NULL);
-//		if (should_philosopher_stop(philo) == true)
+		if (should_philo_stop(philo) == true)
+			return (NULL);
+		print_log(philo, SLEEP);
+//		if (print_log_with_status_check(philo, SLEEP) == FAILURE)
 //			return (NULL);
-//		print_log(philo, SLEEP);
-		if (print_log_with_status_check(philo, SLEEP) == FAILURE)
-			return (NULL);
 		ft_usleep(philo->sim_params.time_to_sleep * US_PER_MS);
-		if (print_log_with_status_check(philo, THINK) == FAILURE)
+//		usleep(philo->sim_params.time_to_sleep * US_PER_MS);
+//		if (print_log_with_status_check(philo, THINK) == FAILURE)
+//			return (NULL);
+		if (should_philo_stop(philo) == true)
 			return (NULL);
+		print_log(philo, THINK);
 	}
 	return (NULL);
 }

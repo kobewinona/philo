@@ -12,27 +12,28 @@
 
 #include "philo.h"
 
+// ct = current time, et = elapsed time
 void	print_log(t_philo *philo, char *message)
 {
-	struct timeval	curr_time;
-	long			elapsed_ms;
+	struct timeval	ct;
+	long			et;
 
-	gettimeofday(&curr_time, NULL);
+	gettimeofday(&ct, NULL);
 	pthread_mutex_lock(&philo->sim_log->mutex);
-	elapsed_ms = (curr_time.tv_sec - philo->sim_log->start_time.tv_sec) * MS_PER_SEC;
-	elapsed_ms += (curr_time.tv_usec - philo->sim_log->start_time.tv_usec) / US_PER_MS;
-	printf("%011ld %d %s", elapsed_ms, philo->id, message);
+	et = (ct.tv_sec - philo->sim_log->start_time.tv_sec) * MS_PER_SEC;
+	et += (ct.tv_usec - philo->sim_log->start_time.tv_usec) / US_PER_MS;
+	printf("%011ld %d %s", et, philo->id, message);
 	pthread_mutex_unlock(&philo->sim_log->mutex);
 }
 
 int	print_log_with_status_check(t_philo *philo, char *message)
 {
-	struct timeval	curr_time;
-	long			elapsed_ms;
+	struct timeval	ct;
+	long			et;
 
-	gettimeofday(&curr_time, NULL);
-	elapsed_ms = (curr_time.tv_sec - philo->sim_log->start_time.tv_sec) * MS_PER_SEC;
-	elapsed_ms += (curr_time.tv_usec - philo->sim_log->start_time.tv_usec) / US_PER_MS;
+	gettimeofday(&ct, NULL);
+	et = (ct.tv_sec - philo->sim_log->start_time.tv_sec) * MS_PER_SEC;
+	et += (ct.tv_usec - philo->sim_log->start_time.tv_usec) / US_PER_MS;
 	pthread_mutex_lock(&philo->sim_status->mutex);
 	if (philo->sim_status->should_stop == true)
 	{
@@ -41,7 +42,7 @@ int	print_log_with_status_check(t_philo *philo, char *message)
 	}
 	pthread_mutex_unlock(&philo->sim_status->mutex);
 	pthread_mutex_lock(&philo->sim_log->mutex);
-	printf("%011ld %d %s", elapsed_ms, philo->id, message);
+	printf("%011ld %d %s", et, philo->id, message);
 	pthread_mutex_unlock(&philo->sim_log->mutex);
 	return (SUCCESS);
 }

@@ -39,14 +39,12 @@
 # define INVALID_ARGS_ERR "Provided arguments are not valid\n"
 # define UNKNOWN_ERR "Unknown error occurred\n"
 
-// get_curr_time_ms messages
+// log messages
 # define THINK "is thinking\n"
 # define FORK "has taken a fork\n"
 # define EAT "is eating\n"
 # define SLEEP "is sleeping\n"
 # define DIE "died\n"
-
-# define FORK "has taken a fork\n"
 
 // structures
 typedef struct s_sim_params
@@ -97,6 +95,7 @@ typedef struct s_philo
 	t_sim_params	sim_params;
 	t_sim_status	*sim_status;
 	t_sim_log		*sim_log;
+	long			sim_start_delay;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	t_meal			*meal;
@@ -117,10 +116,10 @@ typedef struct s_sim
 int		init_sim(t_sim **sim, char **argv);
 void	run_sim(t_sim **sim);
 
-void	*philosopher_routine(void *arg);
-bool	is_philosopher_dead(t_philo *philo);
+void	*philo_routine(void *arg);
+bool	is_philo_dead(t_philo *philo);
 bool	has_philo_meals_left(t_philo *philo);
-bool	should_philosopher_stop(t_philo *philo);
+bool	should_philo_stop(t_philo *philo);
 
 int		try_take_forks(t_philo *philo);
 void	release_forks(t_philo *philo);
@@ -142,7 +141,8 @@ void	ft_usleep(long long usec);
 
 // 00000046789 - 00000045984 5276
 
-// socrates: average delay: 3.2 ms
+// socrates: average delay: 3.2 ms!
 // socrates: average delay: 2.3 ms!
+// socrates: average delay: 0.4 ms!
 
 #endif

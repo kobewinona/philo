@@ -14,10 +14,10 @@
 
 static long long	get_curr_time_us(void)
 {
-	struct timeval	curr_time;
+	struct timeval	ct;
 
-	gettimeofday(&curr_time, NULL);
-	return (curr_time.tv_sec * US_PER_SEC + curr_time.tv_usec);
+	gettimeofday(&ct, NULL);
+	return (ct.tv_sec * US_PER_SEC + ct.tv_usec);
 }
 
 //void	ft_usleep(long long usec)
@@ -43,7 +43,7 @@ void	ft_usleep(long long usec)
 		else
 		{
 			while (get_curr_time_us() < end)
-				usleep(500);
+				usleep(1000);
 			break ;
 		}
 	}

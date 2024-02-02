@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-bool	is_philosopher_dead(t_philo *philo)
+bool	is_philo_dead(t_philo *philo)
 {
 	struct timeval	ct;
 	long			et;
@@ -42,12 +42,14 @@ bool	has_philo_meals_left(t_philo *philo)
 	return (false);
 }
 
-bool	should_philosopher_stop(t_philo *philo)
+bool	should_philo_stop(t_philo *philo)
 {
-	bool	should_stop;
-
 	pthread_mutex_lock(&philo->sim_status->mutex);
-	should_stop = philo->sim_status->should_stop;
+	if (philo->sim_status->should_stop == true)
+	{
+		pthread_mutex_unlock(&philo->sim_status->mutex);
+		return (true);
+	}
 	pthread_mutex_unlock(&philo->sim_status->mutex);
-	return (should_stop);
+	return (false);
 }
