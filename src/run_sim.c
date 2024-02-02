@@ -25,12 +25,12 @@ static int	create_threads(t_sim **sim)
 	i = 0;
 	while (i < (*sim)->params.number_of_philos)
 	{
-		if (pthread_create(&(*sim)->threads[i], NULL, philo_routine,
-				&(*sim)->philos[i]) != SUCCESS)
-			return (ERROR);
 		if ((*sim)->params.number_of_philos > 4)
 			start_delay = (i % 10) * 5;
 		(*sim)->philos[i].sim_start_delay = start_delay;
+		if (pthread_create(&(*sim)->threads[i], NULL, philo_routine,
+				&(*sim)->philos[i]) != SUCCESS)
+			return (ERROR);
 		i++;
 	}
 	return (SUCCESS);
