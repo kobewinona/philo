@@ -23,8 +23,10 @@ static int	create_threads(t_sim **sim)
 		return (ERROR);
 	start_delay = 0;
 	i = 0;
+	(*sim)->log.start_time = get_timestamp();
 	while (i < (*sim)->params.number_of_philos)
 	{
+		(*sim)->philos[i].meal->last_meal = (*sim)->log.start_time;
 		if ((*sim)->params.number_of_philos > 4)
 			start_delay = (i % 10) * 5;
 		(*sim)->philos[i].sim_start_delay = start_delay;
@@ -81,7 +83,6 @@ void	run_sim(t_sim **sim)
 	ms_to_pause = (*sim)->params.time_to_die / FREQ_RATIO_TO_UPDATE_STATUS;
 	if (ms_to_pause > MAX_MS_TO_ANNOUNCE_DEATH || ms_to_pause <= 0)
 		ms_to_pause = MAX_MS_TO_ANNOUNCE_DEATH;
-	gettimeofday(&(*sim)->log.start_time, NULL);
 	if (create_threads(&(*sim)) == ERROR)
 		return ;
 	while (1)
@@ -94,6 +95,8 @@ void	run_sim(t_sim **sim)
 			pthread_mutex_lock(&(*sim)->status.mutex);
 			(*sim)->status.should_stop = true;
 			pthread_mutex_unlock(&(*sim)->status.mutex);
+			if ((*sim)->params.number_of_philos == 1)
+				pthread_mutex_unlock(&(*sim)->forks[0].mutex);
 			join_threads(&(*sim));
 			return ;
 		}

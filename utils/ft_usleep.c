@@ -12,12 +12,12 @@
 
 #include "philo.h"
 
-static long long	get_curr_time_us(void)
+long long	get_timestamp(void)
 {
 	struct timeval	ct;
 
 	gettimeofday(&ct, NULL);
-	return (ct.tv_sec * US_PER_SEC + ct.tv_usec);
+	return ((ct.tv_sec * MS_PER_SEC) + (ct.tv_usec / US_PER_MS));
 }
 
 void	ft_usleep(long long usec)
@@ -25,17 +25,20 @@ void	ft_usleep(long long usec)
 	long long	start;
 	long long	end;
 
-	start = get_curr_time_us();
-	end = start + usec;
-	while (get_curr_time_us() < end)
+	start = get_timestamp();
+	end = start + (usec / US_PER_MS);
+	while (start < end)
 	{
-		if ((end - get_curr_time_us()) > 5000)
+		if ((end - start) > 50000)
+			usleep(40000);
+		else if ((end - start) > 5000)
 			usleep(4000);
 		else
 		{
-			while (get_curr_time_us() < end)
-				usleep(1000);
+			while (get_timestamp() < end)
+				usleep(500);
 			break ;
 		}
+		start = get_timestamp();
 	}
 }

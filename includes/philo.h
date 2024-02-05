@@ -31,7 +31,6 @@
 # define FREQ_RATIO_TO_UPDATE_STATUS 20
 
 # define MS_PER_SEC 1000
-# define US_PER_SEC 1000000
 # define US_PER_MS 1000
 
 // error messages
@@ -40,11 +39,11 @@
 # define UNKNOWN_ERR "Unknown error occurred\n"
 
 // log messages
-# define THINK "is thinking\n"
-# define FORK "has taken a fork\n"
-# define EAT "is eating\n"
-# define SLEEP "is sleeping\n"
-# define DIE "died\n"
+# define THINK "is thinking"
+# define FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define DIE "died"
 
 // structures
 typedef struct s_sim_params
@@ -74,7 +73,7 @@ typedef struct s_sim_status
 typedef struct s_sim_log
 {
 	pthread_mutex_t	mutex;
-	struct timeval	start_time;
+	long long		start_time;
 }	t_sim_log;
 
 typedef struct s_fork
@@ -86,7 +85,7 @@ typedef struct s_meal
 {
 	pthread_mutex_t	mutex;
 	int				number_of_meals_left;
-	struct timeval	last_meal;
+	long long		last_meal;
 }	t_meal;
 
 typedef struct s_philo
@@ -120,12 +119,12 @@ void			run_sim(t_sim **sim);
 void			*philo_routine(void *arg);
 bool			is_philo_dead(t_philo *philo);
 bool			has_philo_meals_left(t_philo *philo);
-bool			should_philo_stop(t_philo *philo);
 
 int				try_take_forks(t_philo *philo);
 void			release_forks(t_philo *philo);
 
-void			print_log(t_philo *philo, char *message);
+int				print_log(t_philo *philo, char *message);
+int				print_log_with_status_check(t_philo *philo, char *message);
 
 int				handle_cleanup(t_sim **sim);
 int				exit_with_error_message(char *err_msg);
@@ -136,5 +135,6 @@ char			**ft_split(char const *s, char c);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 size_t			ft_strlen(const char *s);
 void			ft_usleep(long long usec);
+long long		get_timestamp(void);
 
 #endif
