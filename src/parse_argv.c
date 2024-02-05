@@ -79,10 +79,7 @@ t_sim_params	parse_params(int argc, char **argv)
 	{
 		split_argv = ft_split(argv[i], ' ');
 		if (!split_argv)
-		{
-			cleanup_double_arr(split_argv);
 			exit_with_error_message(UNKNOWN_ERR);
-		}
 		if (update_params(&params, &index, split_argv) == FAILURE)
 		{
 			cleanup_double_arr(split_argv);
@@ -91,5 +88,7 @@ t_sim_params	parse_params(int argc, char **argv)
 		cleanup_double_arr(split_argv);
 		i++;
 	}
+	if (index < 4)
+		exit_with_error_message(NOT_ENOUGH_ARGS_ERR);
 	return (params);
 }

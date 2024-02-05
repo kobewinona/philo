@@ -1,35 +1,39 @@
+.PHONY: all clean fclean re
 NAME			= philo
 
-#CC				= gcc -fsanitize=thread
-#CC				= gcc -fsanitize=address
 CC				= gcc
-#CFLAGS			= -g -Wall -Wextra -Werror -MMD
-CFLAGS			= -g -MMD
+CFLAGS			= -g -Wall -Wextra -Werror -pthread
 RM				= rm -rf
-INCLUDES		= ./includes
 
+INCLUDES		= ./includes
 SRCS_DIR		= ./src
 UTILS_DIR		= ./utils
 OBJS_DIR		= ./obj
 
-rwildcard		= $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
-SRCS			= $(call rwildcard, $(SRCS_DIR)/, *.c) $(call rwildcard, $(UTILS_DIR)/, *.c)
-OBJS 			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
-DEPS 			= $(OBJS:.o=.d)
+SRC_FILES 	= $(wildcard $(SRCS_DIR)/*.c)
+UTILS_FILES = $(wildcard $(UTILS_DIR)/*.c)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -I$(INCLUDES)
+SRC_OBJS 	= $(SRC_FILES:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+UTILS_OBJS 	= $(UTILS_FILES:$(UTILS_DIR)/%.c=$(OBJS_DIR)/%.o)
+
+OBJS = $(SRC_OBJS) $(UTILS_OBJS)
+
+
+$(NAME): $(OBJS) $(INCLUDES)/philo.h
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
-$(OBJS_DIR)/%.o: %.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -pthread -I$(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
 
--include $(DEPS)
+$(OBJS_DIR)/%.o: $(UTILS_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS_DIR) $(DEPS)
+	$(RM) $(OBJS_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
