@@ -78,11 +78,6 @@ static void	update_sim_status(t_sim **sim)
 
 void	run_sim(t_sim **sim)
 {
-	int			ms_to_pause;
-
-	ms_to_pause = (*sim)->params.time_to_die / FREQ_RATIO_TO_UPDATE_STATUS;
-	if (ms_to_pause > MAX_MS_TO_ANNOUNCE_DEATH || ms_to_pause <= 0)
-		ms_to_pause = MAX_MS_TO_ANNOUNCE_DEATH;
 	if (init_and_start_threads(&(*sim)) == ERROR)
 		return ;
 	while (1)
