@@ -12,44 +12,6 @@
 
 #include "philo.h"
 
-static int	init_and_start_threads(t_sim **sim)
-{
-	long	start_delay;
-	int		i;
-
-	(*sim)->threads = (pthread_t *)malloc(
-			(*sim)->params.number_of_philos * sizeof(pthread_t));
-	if (!(*sim)->threads)
-		return (ERROR);
-	(*sim)->log.start_time = get_timestamp();
-	start_delay = 0;
-	i = 0;
-	while (i < (*sim)->params.number_of_philos)
-	{
-		(*sim)->philos[i].meal->last_meal = (*sim)->log.start_time;
-		if ((*sim)->params.number_of_philos % 2 != 0)
-			start_delay = (i % 10) * 5;
-		(*sim)->philos[i].sim_start_delay = start_delay;
-		if (pthread_create(&(*sim)->threads[i], NULL,
-				philo_routine, &(*sim)->philos[i]) != SUCCESS)
-			return (ERROR);
-		i++;
-	}
-	return (SUCCESS);
-}
-
-static void	join_threads(t_sim **sim)
-{
-	int	i;
-
-	i = 0;
-	while (i < (*sim)->params.number_of_philos)
-	{
-		pthread_join((*sim)->threads[i], NULL);
-		i++;
-	}
-}
-
 static void	update_sim_status(t_sim **sim)
 {
 	int	philos_finished_their_meals;
@@ -78,7 +40,7 @@ static void	update_sim_status(t_sim **sim)
 
 void	run_sim(t_sim **sim)
 {
-	if (init_and_start_threads(&(*sim)) == ERROR)
+	if (create_threads(&(*sim)) == ERROR)
 		return ;
 	while (1)
 	{

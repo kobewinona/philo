@@ -118,6 +118,9 @@ t_sim_params	parse_params(int argc, char **argv);
 int				init_sim(t_sim **sim, t_sim_params params);
 void			run_sim(t_sim **sim);
 
+int				create_threads(t_sim **sim);
+void			join_threads(t_sim **sim);
+
 void			*philo_routine(void *arg);
 bool			is_philo_dead(t_philo *philo);
 bool			has_philo_meals_left(t_philo *philo);
