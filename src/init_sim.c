@@ -56,7 +56,7 @@ static int	create_philosophers(t_sim **sim)
 	i = 0;
 	while (i < (*sim)->params.number_of_philos)
 	{
-		(*sim)->philos[i].id = i;
+		(*sim)->philos[i].id = (i + 1);
 		(*sim)->philos[i].sim_params = (*sim)->params;
 		(*sim)->philos[i].sim_status = &(*sim)->status;
 		(*sim)->philos[i].sim_log = &(*sim)->log;

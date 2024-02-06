@@ -112,6 +112,9 @@ typedef struct s_sim
 
 // functions
 // /src
+long long		get_timestamp(void);
+void			smart_usleep(long long usec);
+
 t_sim_params	parse_params(int argc, char **argv);
 int				init_sim(t_sim **sim, t_sim_params params);
 void			run_sim(t_sim **sim);
@@ -134,7 +137,5 @@ int				ft_atoi(const char *str);
 char			**ft_split(char const *s, char c);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 size_t			ft_strlen(const char *s);
-void			ft_usleep(long long usec);
-long long		get_timestamp(void);
 
 #endif

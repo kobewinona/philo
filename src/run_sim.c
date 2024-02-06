@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	create_threads(t_sim **sim)
+static int	init_and_start_threads(t_sim **sim)
 {
 	long	start_delay;
 	int		i;
@@ -21,17 +21,17 @@ static int	create_threads(t_sim **sim)
 			(*sim)->params.number_of_philos * sizeof(pthread_t));
 	if (!(*sim)->threads)
 		return (ERROR);
+	(*sim)->log.start_time = get_timestamp();
 	start_delay = 0;
 	i = 0;
-	(*sim)->log.start_time = get_timestamp();
 	while (i < (*sim)->params.number_of_philos)
 	{
 		(*sim)->philos[i].meal->last_meal = (*sim)->log.start_time;
-		if ((*sim)->params.number_of_philos > 4)
+		if ((*sim)->params.number_of_philos % 2 != 0)
 			start_delay = (i % 10) * 5;
 		(*sim)->philos[i].sim_start_delay = start_delay;
-		if (pthread_create(&(*sim)->threads[i], NULL, philo_routine,
-				&(*sim)->philos[i]) != SUCCESS)
+		if (pthread_create(&(*sim)->threads[i], NULL,
+				philo_routine, &(*sim)->philos[i]) != SUCCESS)
 			return (ERROR);
 		i++;
 	}
@@ -83,7 +83,7 @@ void	run_sim(t_sim **sim)
 	ms_to_pause = (*sim)->params.time_to_die / FREQ_RATIO_TO_UPDATE_STATUS;
 	if (ms_to_pause > MAX_MS_TO_ANNOUNCE_DEATH || ms_to_pause <= 0)
 		ms_to_pause = MAX_MS_TO_ANNOUNCE_DEATH;
-	if (create_threads(&(*sim)) == ERROR)
+	if (init_and_start_threads(&(*sim)) == ERROR)
 		return ;
 	while (1)
 	{
@@ -100,6 +100,6 @@ void	run_sim(t_sim **sim)
 			join_threads(&(*sim));
 			return ;
 		}
-		ft_usleep(ms_to_pause * US_PER_MS);
+		smart_usleep(MAX_MS_TO_ANNOUNCE_DEATH);
 	}
 }

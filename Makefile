@@ -1,9 +1,8 @@
 .PHONY: all clean fclean re
 NAME			= philo
 
-CC				= gcc
-CFLAGS			= -g -Wall -Wextra -Werror -pthread
-#CFLAGS			+= -fsanitize=thread
+CC				= cc
+CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -rf
 
 INCLUDES		= ./includes

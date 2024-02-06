@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_usleep.c                                        :+:      :+:    :+:   */
+/*   smart_usleep.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dklimkin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 15:33:16 by dklimkin          #+#    #+#             */
-/*   Updated: 2024/02/01 15:33:17 by dklimkin         ###   ########.fr       */
+/*   Created: 2024/02/06 13:46:03 by dklimkin          #+#    #+#             */
+/*   Updated: 2024/02/06 13:46:04 by dklimkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	get_timestamp(void)
-{
-	struct timeval	ct;
-
-	gettimeofday(&ct, NULL);
-	return ((ct.tv_sec * MS_PER_SEC) + (ct.tv_usec / US_PER_MS));
-}
-
-void	ft_usleep(long long usec)
+void	smart_usleep(long long usec)
 {
 	long long	start;
 	long long	end;

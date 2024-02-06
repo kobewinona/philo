@@ -18,6 +18,14 @@ int	exit_with_error_message(char *err_msg)
 	exit(EXIT_FAILURE);
 }
 
+long long	get_timestamp(void)
+{
+	struct timeval	ct;
+
+	gettimeofday(&ct, NULL);
+	return ((ct.tv_sec * MS_PER_SEC) + (ct.tv_usec / US_PER_MS));
+}
+
 int	main(int argc, char **argv)
 {
 	t_sim			*sim;
