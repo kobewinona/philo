@@ -33,7 +33,7 @@ static int	create_forks(t_sim **sim)
 
 static int	create_meal(t_meal **meal, int number_of_meals, int count)
 {
-	(*meal) = (t_meal *)malloc(sizeof(t_meal));
+	(*meal) = (t_meal *)malloc(count * sizeof(t_meal));
 	if (!(*meal))
 		return (ERROR);
 	memset((*meal), 0, count * sizeof(t_meal));

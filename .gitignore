@@ -19,3 +19,4 @@ tests
 # rest
 .DS_store
 *.txt
+logs
